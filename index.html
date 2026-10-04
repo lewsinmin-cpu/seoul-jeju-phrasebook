@@ -1,0 +1,695 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Seoul &amp; Jeju Phrasebook</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=Noto+Sans+KR:wght@500;700;900&display=swap">
+<style>
+/* Layout: phone-first single column (max 720px). Sticky search header, category tiles that open
+   phrase lists, a fixed three-tab bar, and a full-screen card for showing a phrase to staff.
+   Hangul is the largest type on every screen. Single light theme by choice: light ground, dark text. */
+:root{
+  --bg:#F3F5F9; --panel:#FFFFFF; --ink:#0E1626; --muted:#465064; --line:#D7DDE8; --on:#FFFFFF;
+  --blue:#1B3A8C; --blue-soft:#E6ECF9; --red:#C21E3A; --red-soft:#FBE7EB;
+  --ok:#17694A; --ok-soft:#E3F3EC; --gold:#9A5B00;
+  --f-display:"Bricolage Grotesque","Figtree",system-ui,sans-serif;
+  --f-body:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --f-ko:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --r:14px;
+  color-scheme:light;
+}
+/* Category hues: Korean five-colour tradition plus Jeju tangerine */
+.c-start{--c:#C21E3A;--cs:#FBE7EB}
+.c-greet{--c:#1B3A8C;--cs:#E6ECF9}
+.c-num{--c:#2B3445;--cs:#E7EAF0}
+.c-food{--c:#9A5B00;--cs:#FBF0D9}
+.c-move{--c:#17694A;--cs:#E3F3EC}
+.c-jeju{--c:#B84A08;--cs:#FDEBDD}
+.c-shop{--c:#A02463;--cs:#FBE6F0}
+.c-help{--c:#0E6470;--cs:#E0F1F3}
+
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 var(--f-body);-webkit-tap-highlight-color:transparent}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+h1,h2,p{margin:0}
+
+.app{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:0 104px}
+
+/* Header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);
+  margin-inline:-16px;padding-inline:16px;padding-block:12px 10px;border-bottom:1px solid var(--line);
+  display:flex;flex-direction:column;gap:10px}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand-ko{font:900 22px/1 var(--f-ko);color:var(--blue)}
+.brand-en{font:500 15px/1.2 var(--f-display);color:var(--muted)}
+.bar{display:flex;gap:8px}
+#q{flex:1;min-width:0;padding:11px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--panel)}
+.slow{flex:none;padding:0 14px;min-height:46px;border-radius:12px;border:1.5px solid var(--blue);background:var(--panel);
+  color:var(--blue);font-weight:600;white-space:nowrap}
+.slow[aria-pressed="true"]{background:var(--blue);color:var(--on)}
+
+#notice{margin-top:12px;padding:12px 14px;background:var(--red-soft);border:1px solid var(--red);border-radius:12px;font-size:14px}
+
+/* Home */
+.hint{margin-top:16px;font-size:14.5px;color:var(--muted);max-width:60ch}
+.tiles{margin-top:14px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:640px){.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.tile{text-align:left;background:var(--cs);border:0;border-radius:var(--r);padding:16px 14px 14px;
+  display:flex;flex-direction:column;gap:12px;min-width:0}
+.tile-ko{font:900 34px/1 var(--f-ko);color:var(--c);word-break:keep-all}
+.tile-t{display:block;font:500 17px/1.2 var(--f-display)}
+.tile-n{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.label{font:600 12.5px/1.2 var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px}
+.sos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
+.sos div{padding:12px 12px 14px;border-left:1px solid var(--line);min-width:0}
+.sos div:first-child{border-left:0}
+.sos b{display:block;font:700 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums;color:var(--red);user-select:all;-webkit-user-select:all}
+.sos span{font-size:13px;color:var(--muted)}
+.foot{margin-top:20px;font-size:13px;color:var(--muted);max-width:65ch}
+
+/* Category page */
+.sec-head{margin-top:14px;display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--r);background:var(--cs)}
+.back{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:var(--panel);display:grid;place-items:center}
+.back svg,.x svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.sec-ko{display:block;font:900 26px/1.1 var(--f-ko);color:var(--c)}
+.page-h{font:500 20px/1.2 var(--f-display);text-wrap:balance}
+.page-top{margin-top:18px}
+.sub{font-size:14.5px;color:var(--muted);margin-top:4px}
+
+/* Phrase rows */
+.list{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.row{display:flex;align-items:center;gap:2px;padding-right:10px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row.playing{background:var(--blue-soft)}
+.row-main{flex:1;min-width:0;text-align:left;background:none;border:0;padding:11px 6px 11px 14px;display:flex;flex-direction:column;gap:1px}
+.en{font-size:14px;color:var(--muted)}
+.en i{font-style:normal;font-weight:600;color:var(--ink)}
+.ko{font:700 21px/1.3 var(--f-ko);word-break:keep-all}
+.ro{font-size:14px;font-weight:500;color:var(--blue)}
+.star{flex:none;width:44px;height:44px;border:0;background:none;border-radius:50%;display:grid;place-items:center;color:var(--muted)}
+.star svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
+.star[aria-pressed="true"]{color:var(--gold)}
+.star[aria-pressed="true"] svg{fill:currentColor}
+.play{flex:none;width:46px;height:46px;border-radius:50%;border:0;background:var(--red);display:grid;place-items:center}
+.play svg{width:20px;height:20px;fill:var(--on)}
+.playing .play{background:var(--blue)}
+
+/* Number chips */
+.chips{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 2px 9px;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:0}
+.chip.playing{background:var(--blue-soft);border-color:var(--blue)}
+.chip .n{font-size:13px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.chip .ko{font-size:20px}
+.chip .ro{font-size:11.5px}
+
+.tips{margin-top:22px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.tips .label{margin:0 0 6px}
+.tips ul{margin:0;padding-left:18px;font-size:14.5px;display:flex;flex-direction:column;gap:6px}
+.empty{margin-top:28px;text-align:center;color:var(--muted);padding:28px 16px;background:var(--panel);border:1px dashed var(--line);border-radius:var(--r)}
+.empty b{display:block;color:var(--ink);font:500 18px/1.3 var(--f-display);margin-bottom:4px}
+
+/* Practice */
+.controls{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px}
+.seg{flex:1 1 auto;display:flex;background:var(--panel);border:1.5px solid var(--line);border-radius:12px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:none;padding:9px 14px;border-radius:9px;font-weight:600;color:var(--muted);min-height:40px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--on)}
+#deck{flex:1 1 230px;min-width:0;padding:0 12px;min-height:49px;border:1.5px solid var(--line);border-radius:12px;background:var(--panel);font-weight:500}
+.prog{margin-top:18px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.prog-bar{flex:1;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.prog-bar i{display:block;height:100%;background:var(--blue);border-radius:3px}
+.card{margin-top:12px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px 18px;min-height:260px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center}
+.card-label{font:600 12.5px/1.2 var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.card-en{font:500 24px/1.25 var(--f-display);text-wrap:balance}
+.card-ko{font:900 36px/1.25 var(--f-ko);word-break:keep-all;text-wrap:balance}
+.card .ro{font-size:16px}
+.card .play{margin-top:6px}
+.score{font:700 56px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.score span{font:500 22px/1 var(--f-display);color:var(--muted)}
+.pair{margin-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.btn{padding:12px 16px;min-height:50px;border-radius:12px;border:1.5px solid var(--ink);background:var(--ink);color:var(--on);font-weight:600}
+.btn.ghost{background:var(--panel);color:var(--ink);border-color:var(--line)}
+.btn.wide{width:100%;margin-top:12px}
+.opts{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:left;padding:13px 14px;min-height:52px;
+  border:1.5px solid var(--line);border-radius:12px;background:var(--panel);font-weight:500;color:var(--ink)}
+.opt:disabled{opacity:1;color:var(--ink);cursor:default}
+.opt .mark{flex:none;font-size:13px;font-weight:700}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.ok .mark{color:var(--ok)}
+.opt.bad{border-color:var(--red);background:var(--red-soft)}
+.opt.bad .mark{color:var(--red)}
+
+/* Tab bar */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--panel);border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabs-in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.tab{border:0;background:none;padding:9px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-size:12.5px;font-weight:600;color:var(--muted);min-height:58px}
+.tab svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
+.tab[aria-current="page"]{color:var(--blue)}
+.tab[aria-current="page"] svg{fill:var(--blue-soft)}
+.badge{font-variant-numeric:tabular-nums}
+
+/* Show-to-staff card */
+.sheet{position:fixed;inset:0;z-index:20;background:var(--panel);display:flex;flex-direction:column;gap:12px;
+  padding:calc(env(safe-area-inset-top,0px) + 10px) 18px calc(env(safe-area-inset-bottom,0px) + 18px)}
+.sheet-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.x{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line);background:var(--panel);display:grid;place-items:center}
+.sheet-box{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#sheet-ko{width:100%;text-align:center;font:900 96px/1.2 var(--f-ko);word-break:keep-all}
+.sheet-me{border-top:1px solid var(--line);padding-top:12px;text-align:center}
+.sheet-me .en{font-size:16px}
+.sheet-me .ro{font-size:16px}
+.sheet-act{display:flex;align-items:center;justify-content:center;gap:14px}
+.sheet-act .play{width:64px;height:64px}
+.sheet-act .play svg{width:28px;height:28px}
+
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 74px);transform:translateX(-50%);z-index:30;
+  background:var(--ink);color:var(--on);padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;white-space:nowrap}
+@media (prefers-reduced-motion:no-preference){
+  .play,.tile,.btn{transition:transform .08s}
+  .play:active,.tile:active,.btn:active{transform:scale(.96)}
+}
+</style>
+
+<div class="app" id="app">
+  <header class="top">
+    <div class="brand"><span class="brand-ko" lang="ko">한국어</span><span class="brand-en">Seoul &amp; Jeju phrasebook</span></div>
+    <div class="bar">
+      <input id="q" type="search" placeholder="Search phrases" aria-label="Search phrases" autocomplete="off">
+      <button class="slow" id="slow-main" data-act="slow" aria-pressed="false" title="Speak more slowly">Slow</button>
+    </div>
+  </header>
+  <div id="notice" hidden>No Korean voice found on this device. Add Korean under your phone's text-to-speech or spoken-content settings, then reload. The Hangul and spelling still show.</div>
+  <main id="view"></main>
+</div>
+
+<nav class="tabs" id="tabs" aria-label="Main">
+  <div class="tabs-in">
+    <button class="tab" data-act="go" data-to="home" id="tab-home"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Phrases</button>
+    <button class="tab" data-act="go" data-to="saved" id="tab-saved"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg><span>Saved <span class="badge" id="badge"></span></span></button>
+    <button class="tab" data-act="go" data-to="practice" id="tab-practice"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="13" height="13" rx="2"/><path d="M4 8v10a2 2 0 0 0 2 2h10"/></svg>Practice</button>
+  </div>
+</nav>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-en" hidden>
+  <div class="sheet-top">
+    <button class="x" id="sheet-x" data-act="close" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button class="star" id="sheet-star" data-act="sheet-fav" aria-pressed="false" aria-label="Save this phrase"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></button>
+  </div>
+  <div class="sheet-box" id="sheet-box"><div id="sheet-ko" lang="ko"></div></div>
+  <div class="sheet-me"><div class="en" id="sheet-en"></div><div class="ro" id="sheet-ro"></div></div>
+  <div class="sheet-act">
+    <button class="play" data-act="sheet-play" aria-label="Play this phrase"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+    <button class="slow" id="slow-sheet" data-act="slow" aria-pressed="false">Slow</button>
+  </div>
+</div>
+<div id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function(){
+var S = [
+{id:"start", t:"Must-know", w:"필수", groups:[{h:"Learn these first", rows:[
+ ["Hello","안녕하세요","an-nyeong-ha-se-yo"],
+ ["Thank you","감사합니다","gam-sa-ham-ni-da"],
+ ["Excuse me (to call staff)","저기요","jeo-gi-yo"],
+ ["Sorry","죄송합니다","joe-song-ham-ni-da"],
+ ["Excuse me (passing by)","실례합니다","sil-lye-ham-ni-da"],
+ ["Yes","네","ne"],
+ ["No","아니요","a-ni-yo"],
+ ["Please give me this","이거 주세요","i-geo ju-se-yo"],
+ ["How much is it?","얼마예요?","eol-ma-ye-yo"],
+ ["Where is the toilet?","화장실 어디예요?","hwa-jang-sil eo-di-ye-yo"],
+ ["I don't understand","모르겠어요","mo-reu-get-seo-yo"],
+ ["Do you speak English?","영어 할 수 있어요?","yeong-eo hal su i-sseo-yo"]
+]}], tips:["Ending a phrase with “yo” makes it polite.","Give and receive money, cards and items with two hands, as a sign of respect."]},
+
+{id:"greet", t:"Greetings", w:"인사", groups:[{h:"Greetings and politeness", rows:[
+ ["Nice to meet you","만나서 반갑습니다","man-na-seo ban-gap-seum-ni-da"],
+ ["Goodbye (you are leaving)","안녕히 계세요","an-nyeong-hi gye-se-yo"],
+ ["Goodbye (they are leaving)","안녕히 가세요","an-nyeong-hi ga-se-yo"],
+ ["It's okay","괜찮아요","gwaen-chan-a-yo"],
+ ["No, thank you","괜찮습니다","gwaen-chan-seum-ni-da"],
+ ["Please wait a moment","잠깐만요","jam-kkan-man-yo"],
+ ["Please help me","도와주세요","do-wa-ju-se-yo"],
+ ["Delicious!","맛있어요!","ma-si-sseo-yo"],
+ ["Cheers!","건배!","geon-bae"],
+ ["Slowly, please","천천히 말해 주세요","cheon-cheon-hi mal-hae ju-se-yo"],
+ ["Please say it again","다시 말해 주세요","da-si mal-hae ju-se-yo"]
+]}], tips:["Shop staff say 어서 오세요 (“welcome”). A nod or smile back is enough."]},
+
+{id:"num", t:"Numbers", w:"숫자", groups:[
+ {h:"Sino-Korean: money, floors, dates", compact:true, tag:"Sino-Korean", rows:[
+  ["1","일","il"],["2","이","i"],["3","삼","sam"],["4","사","sa"],["5","오","o"],
+  ["6","육","yuk"],["7","칠","chil"],["8","팔","pal"],["9","구","gu"],["10","십","sip"]]},
+ {h:"Native Korean: counting items and people", compact:true, tag:"native Korean", rows:[
+  ["1","하나","ha-na"],["2","둘","dul"],["3","셋","set"],["4","넷","net"],["5","다섯","da-seot"],
+  ["6","여섯","yeo-seot"],["7","일곱","il-gop"],["8","여덟","yeo-deol"],["9","아홉","a-hop"],["10","열","yeol"]]},
+ {h:"Money", rows:[
+  ["100 won","백 원","baek won"],["1,000 won","천 원","cheon won"],
+  ["10,000 won","만 원","man won"],["50,000 won","오만 원","o-man won"],["100,000 won","십만 원","sip-man won"]]},
+ {h:"Counting people and things", rows:[
+  ["We are four people","네 명이에요","ne myeong-i-e-yo"],
+  ["Two coffees, please","커피 두 잔 주세요","keo-pi du jan ju-se-yo"],
+  ["Four portions, please","사 인분 주세요","sa in-bun ju-se-yo"],
+  ["Three pieces","세 개","se gae"],
+  ["One bottle of water","물 한 병","mul han byeong"]]}
+ ], tips:["Money, dates and floors use Sino-Korean. Counting items, people and drinks uses native Korean.","Korea counts money in units of 10,000 (만): 50,000 won is “five man”."]},
+
+{id:"food", t:"Food", w:"음식", groups:[
+ {h:"At the table", rows:[
+  ["A table for 4, please","네 명이에요","ne myeong-i-e-yo"],
+  ["Menu, please","메뉴판 주세요","me-nyu-pan ju-se-yo"],
+  ["English menu, please","영어 메뉴판 있어요?","yeong-eo me-nyu-pan i-sseo-yo"],
+  ["What do you recommend?","추천해 주세요","chu-cheon-hae ju-se-yo"],
+  ["I'll have this one","이거 주세요","i-geo ju-se-yo"],
+  ["Water, please","물 주세요","mul ju-se-yo"],
+  ["More side dishes, please","반찬 더 주세요","ban-chan deo ju-se-yo"],
+  ["Check, please","계산해 주세요","gye-san-hae ju-se-yo"],
+  ["Takeaway, please","포장해 주세요","po-jang-hae ju-se-yo"],
+  ["Can I pay by card?","카드 돼요?","ka-deu dwae-yo"],
+  ["Separate bills, please","따로 계산해 주세요","tta-ro gye-san-hae ju-se-yo"],
+  ["A fork, please","포크 주세요","po-keu ju-se-yo"]]},
+ {h:"Spice and dietary needs", rows:[
+  ["Not spicy, please","안 맵게 해 주세요","an maep-ge hae ju-se-yo"],
+  ["Is this spicy?","이거 매워요?","i-geo mae-wo-yo"],
+  ["A little spicy is fine","조금 매운 건 괜찮아요","jo-geum mae-un geon gwaen-chan-a-yo"],
+  ["No pork","돼지고기 빼 주세요","dwae-ji-go-gi ppae ju-se-yo"],
+  ["No beef","소고기 빼 주세요","so-go-gi ppae ju-se-yo"],
+  ["No seafood","해산물 빼 주세요","hae-san-mul ppae ju-se-yo"],
+  ["I have a peanut allergy","땅콩 알레르기가 있어요","ttang-kong al-le-reu-gi-ga i-sseo-yo"],
+  ["I have an egg allergy","계란 알레르기가 있어요","gye-ran al-le-reu-gi-ga i-sseo-yo"],
+  ["I have a shellfish allergy","갑각류 알레르기가 있어요","gap-gak-ryu al-le-reu-gi-ga i-sseo-yo"],
+  ["I'm vegetarian","채식주의자예요","chae-sik-ju-ui-ja-ye-yo"],
+  ["Does it contain meat?","고기 들어가요?","go-gi deu-reo-ga-yo"]]},
+ {h:"Dishes", rows:[
+  ["Korean fried chicken","치킨","chi-kin"],
+  ["Spicy rice cakes","떡볶이","tteok-bok-ki"],
+  ["Seaweed rice rolls","김밥","gim-bap"],
+  ["Mixed rice bowl","비빔밥","bi-bim-bap"],
+  ["Pork belly BBQ","삼겹살","sam-gyeop-sal"],
+  ["Marinated ribs","갈비","gal-bi"],
+  ["Marinated beef","불고기","bul-go-gi"],
+  ["Kimchi stew","김치찌개","gim-chi-jji-gae"],
+  ["Sweet filled pancake","호떡","ho-tteok"],
+  ["Fish cake skewers","어묵","eo-muk"],
+  ["Cold buckwheat noodles","냉면","naeng-myeon"],
+  ["Jeju black pork","흑돼지","heuk-dwae-ji"],
+  ["Abalone porridge","전복죽","jeon-bok-juk"]]}
+ ], tips:["Press the call button on the table instead of waving.","Tipping is not expected.","Some BBQ places require a minimum of 2 portions."]},
+
+{id:"move", t:"Getting around", w:"교통", groups:[
+ {h:"Metro, taxi, bus", rows:[
+  ["Where is the exit?","출구 어디예요?","chul-gu eo-di-ye-yo"],
+  ["Transfer","환승","hwan-seung"],
+  ["Top up the card","충전해 주세요","chung-jeon-hae ju-se-yo"],
+  ["Left","왼쪽","oen-jjok"],
+  ["Right","오른쪽","o-reun-jjok"],
+  ["Straight ahead","직진","jik-jin"],
+  ["Taxi","택시","taek-si"],
+  ["Please stop here","여기서 세워 주세요","yeo-gi-seo se-wo ju-se-yo"],
+  ["How long does it take?","얼마나 걸려요?","eol-ma-na geol-lyeo-yo"],
+  ["I'm getting off here","내릴게요","nae-ril-ge-yo"],
+  ["Could you call a taxi?","택시 불러 주세요","taek-si bul-leo ju-se-yo"]]},
+ {h:"Signs", rows:[
+  ["Entrance","입구","ip-gu"],["Exit","출구","chul-gu"],
+  ["Push","미세요","mi-se-yo"],["Pull","당기세요","dang-gi-se-yo"],
+  ["Out of service","고장","go-jang"],["Closed today","오늘 휴무","o-neul hyu-mu"]]}
+ ], tips:["Say the station name then 역 (yeok). For example, “Hongdae” station is 홍대입구역.","Check the exit number in your map app before leaving the station.","Show your destination in Hangul to taxi drivers."]},
+
+{id:"jeju", t:"Jeju drive", w:"제주", groups:[
+ {h:"Car and fuel", rows:[
+  ["Rental car","렌터카","ren-teo-ka"],
+  ["I have a reservation","예약했어요","ye-yak-hae-sseo-yo"],
+  ["Full insurance","완전 자차 보험","wan-jeon ja-cha bo-heom"],
+  ["Gas station","주유소","ju-yu-so"],
+  ["Petrol","휘발유","hwi-bal-yu"],
+  ["Diesel","경유","gyeong-yu"],
+  ["Fill it up, please","가득 넣어 주세요","ga-deuk neo-eo ju-se-yo"],
+  ["30,000 won of petrol, please","삼만 원 주유해 주세요","sam-man won ju-yu-hae ju-se-yo"],
+  ["Charging station","충전소","chung-jeon-so"]]},
+ {h:"Parking and trouble", rows:[
+  ["Parking lot","주차장","ju-cha-jang"],
+  ["Free parking","무료 주차","mu-ryo ju-cha"],
+  ["Paid parking","유료 주차","yu-ryo ju-cha"],
+  ["Where can I park?","어디에 주차해요?","eo-di-e ju-cha-hae-yo"],
+  ["Flat tyre","타이어 펑크","ta-i-eo peong-keu"],
+  ["Accident","사고","sa-go"],
+  ["Please call the rental company","렌터카 회사에 전화해 주세요","ren-teo-ka hoe-sa-e jeon-hwa-hae ju-se-yo"]]},
+ {h:"Road signs", rows:[
+  ["Stop","정지","jeong-ji"],["Slow down","서행","seo-haeng"],
+  ["Speed camera","과속단속카메라","gwa-sok-dan-sok ka-me-ra"],
+  ["Road closed","통제","tong-je"],["Chains required","체인 필수","che-in pil-su"],
+  ["No parking","주차금지","ju-cha-geum-ji"],["Rest area","휴게소","hyu-ge-so"]]}
+ ], tips:["Use Naver Map or Kakao Map for driving directions.","Carry your licence and an International Driving Permit.","Check snow closures on mountain roads such as the 1100 Highway before heading out."]},
+
+{id:"shop", t:"Shopping", w:"쇼핑", groups:[
+ {h:"In the shop", rows:[
+  ["Can I try this on?","입어 봐도 돼요?","i-beo bwa-do dwae-yo"],
+  ["Fitting room","탈의실","tal-ui-sil"],
+  ["Do you have a bigger size?","더 큰 사이즈 있어요?","deo keun sa-i-jeu i-sseo-yo"],
+  ["Do you have a smaller size?","더 작은 사이즈 있어요?","deo ja-geun sa-i-jeu i-sseo-yo"],
+  ["Other colours?","다른 색 있어요?","da-reun saek i-sseo-yo"],
+  ["Can you give a discount?","좀 깎아 주세요","jom kka-kka ju-se-yo"],
+  ["I'm just looking","그냥 구경하는 거예요","geu-nyang gu-gyeong-ha-neun geo-ye-yo"],
+  ["Can I get a tax refund?","택스 리펀 돼요?","taeks ri-peon dwae-yo"],
+  ["Gift wrap, please","선물 포장해 주세요","seon-mul po-jang-hae ju-se-yo"],
+  ["Sold out","품절","pum-jeol"],
+  ["Receipt, please","영수증 주세요","yeong-su-jeung ju-se-yo"]]},
+ {h:"K-beauty", rows:[
+  ["Sheet mask","마스크팩","ma-seu-keu-paek"],
+  ["Sunscreen","선크림","seon-keu-rim"],
+  ["Toner","토너","to-neo"],
+  ["Serum","세럼","se-reom"],
+  ["Moisturiser","크림","keu-rim"],
+  ["Cleanser","클렌징","keul-len-jing"],
+  ["Lip tint","립틴트","rip-tin-teu"],
+  ["Cushion foundation","쿠션","ku-syeon"],
+  ["For dry skin","건성","geon-seong"],
+  ["For oily skin","지성","ji-seong"],
+  ["For sensitive skin","민감성","min-gam-seong"],
+  ["Brightening","미백","mi-baek"],
+  ["Hydrating","수분","su-bun"],
+  ["Soothing","진정","jin-jeong"],
+  ["Fragrance-free","무향","mu-hyang"],
+  ["Is there a tester?","테스터 있어요?","te-seu-teo i-sseo-yo"],
+  ["Which is most popular?","제일 인기 있는 게 뭐예요?","je-il in-gi in-neun ge mwo-ye-yo"],
+  ["Buy 1 get 1 free","원 플러스 원","won peul-reo-seu won"]]}
+ ], tips:["Bargaining works at traditional markets, but not in department stores or chain stores like Olive Young.","Bring your passport for tax refunds."]},
+
+{id:"help", t:"Hotel & help", w:"도움", groups:[
+ {h:"Hotel", rows:[
+  ["Check-in","체크인","che-keu-in"],["Check-out","체크아웃","che-keu-a-ut"],
+  ["Can I leave my luggage?","짐 맡겨도 돼요?","jim mat-gyeo-do dwae-yo"],
+  ["Wi-Fi password?","와이파이 비밀번호 뭐예요?","wa-i-pa-i bi-mil-beon-ho mwo-ye-yo"],
+  ["The heating does not work","난방이 안 돼요","nan-bang-i an dwae-yo"],
+  ["Extra towels, please","수건 더 주세요","su-geon deo ju-se-yo"],
+  ["Extra blanket, please","이불 더 주세요","i-bul deo ju-se-yo"]]},
+ {h:"Emergencies and health", rows:[
+  ["Help!","도와주세요!","do-wa-ju-se-yo"],
+  ["Call an ambulance","구급차 불러 주세요","gu-geup-cha bul-leo ju-se-yo"],
+  ["I need a doctor","의사가 필요해요","ui-sa-ga pil-yo-hae-yo"],
+  ["Hospital","병원","byeong-won"],
+  ["Pharmacy","약국","yak-guk"],
+  ["I feel sick","아파요","a-pa-yo"],
+  ["I have a stomach ache","배가 아파요","bae-ga a-pa-yo"],
+  ["I have a headache","머리가 아파요","meo-ri-ga a-pa-yo"],
+  ["I have a fever","열이 있어요","yeo-ri i-sseo-yo"],
+  ["I lost my passport","여권을 잃어버렸어요","yeo-gwo-neul i-reo-beo-ryeo-sseo-yo"],
+  ["I lost my phone","휴대폰을 잃어버렸어요","hyu-dae-po-neul i-reo-beo-ryeo-sseo-yo"],
+  ["I'm lost","길을 잃었어요","gi-reul i-reo-sseo-yo"]]}
+ ], tips:["Dial 119 for fire and ambulance, 112 for police.","1330 is the Korea Travel Helpline, with English support.","Keep a screenshot of your hotel name and address in Hangul on your phone."]}
+];
+
+/* ---------- data index ---------- */
+var P = [], BY = {}, SEC = {};
+S.forEach(function(s){
+  SEC[s.id] = s; s.count = 0;
+  s.groups.forEach(function(g){
+    g.items = g.rows.map(function(r){
+      var p = {k:r[0]+"|"+r[1], en:r[0], ko:r[1], ro:r[2], sec:s.id, st:s.t,
+               pen: g.tag ? r[0]+" ("+g.tag+")" : r[0]};
+      p.s = (p.en+" "+p.ko+" "+p.ro+" "+p.ro.replace(/-/g,"")).toLowerCase();
+      P.push(p); BY[p.k] = p; s.count++; return p;
+    });
+  });
+});
+
+function load(k,d){ try{ var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } }
+function store(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+var favs = load("kp.favs", []); if(!Array.isArray(favs)) favs = [];
+favs = favs.filter(function(k){ return BY[k]; });
+var slow = !!load("kp.slow", false);
+
+var view = document.getElementById("view"), qEl = document.getElementById("q"),
+    notice = document.getElementById("notice"), sheet = document.getElementById("sheet"),
+    toastEl = document.getElementById("toast");
+var route = "home", koVoice = null, cur = null, sheetP = null, lastFocus = null, wake = null, toastT = 0;
+var pr = {mode:"flash", deck:"all", q:[], i:0, rev:false, right:0, miss:[], picked:-1, opts:[], started:false};
+
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>';
+var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+function isFav(k){ return favs.indexOf(k) > -1; }
+
+/* ---------- views ---------- */
+function rowHTML(p, withSec){
+  return '<div class="row" data-k="'+esc(p.k)+'">'
+    + '<button class="row-main" data-act="show" aria-label="Show '+esc(p.en)+' full screen">'
+    + '<span class="en">'+(withSec ? '<i>'+esc(p.st)+'</i> · ' : '')+esc(p.en)+'</span>'
+    + '<span class="ko" lang="ko">'+esc(p.ko)+'</span><span class="ro">'+esc(p.ro)+'</span></button>'
+    + '<button class="star" data-act="fav" aria-pressed="'+isFav(p.k)+'" aria-label="Save '+esc(p.en)+'">'+STAR+'</button>'
+    + '<button class="play" data-act="play" aria-label="Play '+esc(p.en)+'">'+PLAY+'</button></div>';
+}
+function vHome(){
+  var h = '<p class="hint">Tap a phrase to show it full screen to staff. Tap the red button to hear it.</p><div class="tiles">';
+  S.forEach(function(s){
+    h += '<button class="tile c-'+s.id+'" data-act="go" data-to="'+s.id+'"><span class="tile-ko" lang="ko">'+s.w+'</span>'
+      + '<span><span class="tile-t">'+esc(s.t)+'</span><span class="tile-n">'+s.count+' phrases</span></span></button>';
+  });
+  h += '</div><h2 class="label">Emergency numbers</h2><div class="sos">'
+    + '<div><b>119</b><span>Fire and ambulance</span></div><div><b>112</b><span>Police</span></div>'
+    + '<div><b>1330</b><span>Travel helpline, English</span></div></div>'
+    + '<p class="foot">Voices come from your own device, so the sound varies by phone. Spellings are approximate.</p>';
+  return h;
+}
+function vSection(id){
+  var s = SEC[id];
+  var h = '<div class="sec-head c-'+s.id+'"><button class="back" data-act="go" data-to="home" aria-label="Back to all categories">'
+    + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>'
+    + '<div><span class="sec-ko" lang="ko">'+s.w+'</span><h1 class="page-h">'+esc(s.t)+'</h1></div></div>';
+  s.groups.forEach(function(g){
+    h += '<h2 class="label">'+esc(g.h)+'</h2>';
+    if(g.compact){
+      h += '<div class="chips">'+g.items.map(function(p){
+        return '<button class="chip" data-k="'+esc(p.k)+'" data-act="play" aria-label="Play '+esc(p.pen)+'">'
+          + '<span class="n">'+esc(p.en)+'</span><span class="ko" lang="ko">'+esc(p.ko)+'</span><span class="ro">'+esc(p.ro)+'</span></button>';
+      }).join("")+'</div>';
+    } else {
+      h += '<div class="list">'+g.items.map(function(p){ return rowHTML(p); }).join("")+'</div>';
+    }
+  });
+  if(s.tips && s.tips.length){
+    h += '<aside class="tips"><h2 class="label">Good to know</h2><ul>'
+      + s.tips.map(function(t){ return '<li>'+esc(t)+'</li>'; }).join("")+'</ul></aside>';
+  }
+  return h;
+}
+function vSaved(){
+  var h = '<div class="page-top"><h1 class="page-h">Saved phrases</h1></div>';
+  if(!favs.length) return h + '<div class="empty"><b>Nothing saved yet</b>Tap the star beside any phrase to keep it here for quick access.</div>';
+  return h + '<p class="sub">'+favs.length+(favs.length===1?' phrase':' phrases')+', kept on this device.</p>'
+    + '<div class="list" style="margin-top:12px">'+favs.map(function(k){ return rowHTML(BY[k], true); }).join("")+'</div>';
+}
+function vSearch(q){
+  var m = P.filter(function(p){ return p.s.indexOf(q) > -1; });
+  var h = '<div class="page-top"><h1 class="page-h">'+m.length+(m.length===1?' match':' matches')+'</h1></div>';
+  if(!m.length) return h + '<div class="empty"><b>No matches</b>Try a shorter word, or search in English.</div>';
+  return h + '<div class="list" style="margin-top:12px">'+m.map(function(p){ return rowHTML(p, true); }).join("")+'</div>';
+}
+
+/* ---------- practice ---------- */
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)), t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function deckList(){
+  if(pr.deck==="all") return shuffle(P.slice()).slice(0,20);
+  if(pr.deck==="saved") return favs.map(function(k){ return BY[k]; });
+  return P.filter(function(p){ return p.sec===pr.deck; });
+}
+function mkOpts(){
+  var c = pr.q[pr.i]; if(!c) return;
+  var seen = {}; seen[c.pen] = 1;
+  var pool = shuffle(P.filter(function(p){ return p.ko!==c.ko && p.en!==c.en; }));
+  pool.sort(function(a,b){ return (b.sec===c.sec) - (a.sec===c.sec); });
+  var pick = [];
+  for(var i=0;i<pool.length && pick.length<3;i++){ if(!seen[pool[i].pen]){ seen[pool[i].pen]=1; pick.push(pool[i]); } }
+  pr.opts = shuffle([c].concat(pick)); pr.picked = -1;
+}
+function startPr(list){
+  pr.q = shuffle((list || deckList()).slice()); pr.i = 0; pr.rev = false; pr.right = 0; pr.miss = []; pr.started = true;
+  if(pr.mode==="quiz") mkOpts();
+}
+function vPractice(){
+  var opts = '<option value="all">All phrases, 20 at random</option><option value="saved">Saved phrases ('+favs.length+')</option>'
+    + S.map(function(s){ return '<option value="'+s.id+'">'+esc(s.t)+' ('+s.count+')</option>'; }).join("");
+  var h = '<div class="page-top"><h1 class="page-h">Practice</h1></div><div class="controls">'
+    + '<div class="seg" role="group" aria-label="Practice mode">'
+    + '<button data-act="mode" data-mode="flash" aria-pressed="'+(pr.mode==="flash")+'">Flashcards</button>'
+    + '<button data-act="mode" data-mode="quiz" aria-pressed="'+(pr.mode==="quiz")+'">Quiz</button></div>'
+    + '<select id="deck" aria-label="Choose a set to practise">'+opts+'</select></div>';
+  var n = pr.q.length;
+  if(!n) return h + '<div class="empty"><b>This set is empty</b>Star a few phrases first, or choose another set above.</div>';
+  if(pr.i >= n){
+    h += '<div class="card"><div class="card-label">Round complete</div><div class="score">'+pr.right+'<span> of '+n+'</span></div>'
+      + '<p class="sub">'+(pr.miss.length ? 'Go over the ones you missed while they are fresh.' : 'A clean round. Try another set.')+'</p></div>';
+    h += pr.miss.length
+      ? '<div class="pair"><button class="btn ghost" data-act="restart">New round</button><button class="btn" data-act="retry">Redo the '+pr.miss.length+' missed</button></div>'
+      : '<button class="btn wide" data-act="restart">New round</button>';
+    return h;
+  }
+  var p = pr.q[pr.i];
+  h += '<div class="prog"><span>'+(pr.i+1)+' of '+n+'</span><div class="prog-bar"><i style="width:'+Math.round(pr.i/n*100)+'%"></i></div></div>';
+  if(pr.mode==="flash"){
+    h += '<div class="card" data-k="'+esc(p.k)+'"><div class="card-label">How do you say</div><div class="card-en">'+esc(p.pen)+'</div>';
+    h += pr.rev
+      ? '<div class="card-ko" lang="ko">'+esc(p.ko)+'</div><div class="ro">'+esc(p.ro)+'</div><button class="play" data-act="play" aria-label="Play again">'+PLAY+'</button></div>'
+        + '<div class="pair"><button class="btn ghost" data-act="grade" data-g="0">Still learning</button><button class="btn" data-act="grade" data-g="1">Got it</button></div>'
+      : '</div><button class="btn wide" data-act="reveal">Show the Korean</button>';
+  } else {
+    var done = pr.picked > -1;
+    h += '<div class="card" data-k="'+esc(p.k)+'"><div class="card-label">What does this mean?</div><div class="card-ko" lang="ko">'+esc(p.ko)+'</div>'
+      + (done ? '<div class="ro">'+esc(p.ro)+'</div>' : '')
+      + '<button class="play" data-act="play" aria-label="Listen">'+PLAY+'</button></div><div class="opts">';
+    pr.opts.forEach(function(o,i){
+      var cls = "", mark = "";
+      if(done && o===p){ cls = " ok"; mark = "Correct"; }
+      else if(done && i===pr.picked){ cls = " bad"; mark = "Not this one"; }
+      h += '<button class="opt'+cls+'" data-act="pick" data-i="'+i+'"'+(done?' disabled':'')+'><span>'+esc(o.pen)+'</span><span class="mark">'+mark+'</span></button>';
+    });
+    h += '</div>';
+    if(done) h += '<button class="btn wide" data-act="next">'+(pr.i+1>=n ? 'See results' : 'Next')+'</button>';
+  }
+  return h;
+}
+
+/* ---------- render and routing ---------- */
+function render(){
+  var q = qEl.value.trim().toLowerCase();
+  view.innerHTML = q ? vSearch(q) : route==="home" ? vHome() : route==="saved" ? vSaved()
+                 : route==="practice" ? vPractice() : vSection(route);
+  var d = document.getElementById("deck"); if(d) d.value = pr.deck;
+  var tab = (route==="saved"||route==="practice") ? route : "home";
+  ["home","saved","practice"].forEach(function(t){
+    var el = document.getElementById("tab-"+t);
+    if(t===tab && !q) el.setAttribute("aria-current","page"); else el.removeAttribute("aria-current");
+  });
+  document.getElementById("badge").textContent = favs.length ? favs.length : "";
+}
+function valid(r){ return r==="home"||r==="saved"||r==="practice"||!!SEC[r]; }
+function go(r){
+  if(!valid(r)) r = "home";
+  route = r; qEl.value = "";
+  if(r==="practice" && !pr.started) startPr();
+  render(); window.scrollTo(0,0);
+  try{ if(location.hash.slice(1)!==r) location.hash = r; }catch(e){}
+}
+window.addEventListener("hashchange", function(){
+  var r = location.hash.slice(1); if(valid(r) && r!==route) go(r);
+});
+
+/* ---------- speech ---------- */
+function loadVoice(){
+  if(!("speechSynthesis" in window)) return;
+  var v = speechSynthesis.getVoices().filter(function(x){ return /^ko/i.test(String(x.lang).replace("_","-")); });
+  koVoice = v.length ? v[0] : null;
+}
+function say(text, el){
+  if(!("speechSynthesis" in window)){ notice.hidden = false; return; }
+  speechSynthesis.cancel();
+  if(cur) cur.classList.remove("playing");
+  var u = new SpeechSynthesisUtterance(text.replace(/[()]/g," ").replace(/\s+/g," ").trim());
+  u.lang = "ko-KR"; if(koVoice) u.voice = koVoice; u.rate = slow ? 0.55 : 0.9;
+  cur = el || null; if(el) el.classList.add("playing");
+  u.onend = u.onerror = function(){ if(el) el.classList.remove("playing"); };
+  speechSynthesis.speak(u);
+}
+function syncSlow(){
+  ["slow-main","slow-sheet"].forEach(function(id){
+    var b = document.getElementById(id); b.setAttribute("aria-pressed", slow); b.textContent = slow ? "Slow on" : "Slow";
+  });
+}
+
+/* ---------- favourites, toast, sheet ---------- */
+function toast(msg){
+  toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toastT);
+  toastT = setTimeout(function(){ toastEl.hidden = true; }, 1400);
+}
+function toggleFav(k){
+  var i = favs.indexOf(k), on = i < 0;
+  if(on) favs.push(k); else favs.splice(i,1);
+  store("kp.favs", favs);
+  if(route==="saved" && !qEl.value.trim() && sheet.hidden) render();
+  else {
+    Array.prototype.forEach.call(view.querySelectorAll("[data-k]"), function(el){
+      if(el.dataset.k===k){ var s = el.querySelector(".star"); if(s) s.setAttribute("aria-pressed", on); }
+    });
+    document.getElementById("badge").textContent = favs.length ? favs.length : "";
+  }
+  if(sheetP && sheetP.k===k) document.getElementById("sheet-star").setAttribute("aria-pressed", on);
+  if(sheet.hidden) toast(on ? "Saved" : "Removed from saved");
+}
+function fit(){
+  var box = document.getElementById("sheet-box"), el = document.getElementById("sheet-ko"), s = 132;
+  el.style.fontSize = s+"px";
+  while(s > 28 && (el.scrollWidth > el.clientWidth + 1 || el.offsetHeight > box.clientHeight)){ s -= 4; el.style.fontSize = s+"px"; }
+}
+function openSheet(p, from){
+  sheetP = p; lastFocus = from || null;
+  document.getElementById("sheet-ko").textContent = p.ko;
+  document.getElementById("sheet-en").textContent = p.en;
+  document.getElementById("sheet-ro").textContent = p.ro;
+  document.getElementById("sheet-star").setAttribute("aria-pressed", isFav(p.k));
+  sheet.hidden = false;
+  document.getElementById("app").inert = true; document.getElementById("tabs").inert = true;
+  fit(); document.getElementById("sheet-x").focus();
+  try{ if(navigator.wakeLock) navigator.wakeLock.request("screen").then(function(l){ wake = l; }).catch(function(){}); }catch(e){}
+}
+function closeSheet(){
+  if(sheet.hidden) return;
+  sheet.hidden = true; sheetP = null;
+  document.getElementById("app").inert = false; document.getElementById("tabs").inert = false;
+  if("speechSynthesis" in window) speechSynthesis.cancel();
+  try{ if(wake){ wake.release(); wake = null; } }catch(e){}
+  if(route==="saved" && !qEl.value.trim()) render();
+  else if(lastFocus && document.contains(lastFocus)) lastFocus.focus();
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click", function(e){
+  var b = e.target.closest("[data-act]"); if(!b) return;
+  var holder = b.closest("[data-k]"), p = holder ? BY[holder.dataset.k] : null;
+  switch(b.dataset.act){
+    case "go": go(b.dataset.to); break;
+    case "play": if(p) say(p.ko, holder); break;
+    case "fav": if(p) toggleFav(p.k); break;
+    case "show": if(p) openSheet(p, b); break;
+    case "close": closeSheet(); break;
+    case "sheet-play": if(sheetP) say(sheetP.ko, sheet); break;
+    case "sheet-fav": if(sheetP) toggleFav(sheetP.k); break;
+    case "slow": slow = !slow; store("kp.slow", slow); syncSlow(); break;
+    case "mode": pr.mode = b.dataset.mode; startPr(); render(); break;
+    case "reveal": pr.rev = true; render(); say(pr.q[pr.i].ko, view.querySelector(".card")); break;
+    case "grade":
+      if(b.dataset.g==="1") pr.right++; else pr.miss.push(pr.q[pr.i]);
+      pr.i++; pr.rev = false; render(); break;
+    case "pick":
+      if(pr.picked > -1) break;
+      pr.picked = +b.dataset.i;
+      if(pr.opts[pr.picked]===pr.q[pr.i]) pr.right++; else pr.miss.push(pr.q[pr.i]);
+      render(); break;
+    case "next": pr.i++; mkOpts(); render(); break;
+    case "restart": startPr(); render(); break;
+    case "retry": startPr(pr.miss.slice()); render(); break;
+  }
+});
+document.addEventListener("change", function(e){
+  if(e.target.id==="deck"){ pr.deck = e.target.value; startPr(); render(); }
+});
+document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeSheet(); });
+qEl.addEventListener("input", function(){ render(); });
+window.addEventListener("resize", function(){ if(!sheet.hidden) fit(); });
+
+/* ---------- boot ---------- */
+syncSlow();
+var first = ""; try{ first = location.hash.slice(1); }catch(e){}
+route = valid(first) ? first : "home";
+if(route==="practice") startPr();
+render();
+loadVoice();
+if("speechSynthesis" in window){
+  speechSynthesis.onvoiceschanged = loadVoice;
+  setTimeout(function(){ loadVoice(); if(!koVoice) notice.hidden = false; }, 1800);
+} else { notice.hidden = false; }
+})();
+</script>
+
+</body></html>
